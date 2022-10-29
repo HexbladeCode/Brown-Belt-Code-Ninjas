@@ -120,3 +120,33 @@ class Brick(pygame.sprite.Sprite):
             return True
 
         return False
+
+
+class BrickWall(pygame.sprite.Group):
+    def __init__(self, screen, x, y, width, height):
+        self.__screen = screen
+        self._x = x
+        self._y = y
+        self._width = width
+        self._height = height
+        self._bricks = []
+
+        X = x
+        Y = y
+        for i in range(3):
+            for j in range(4):
+                self._bricks.append(Brick(screen, width, height, X, Y))
+                X += width + (width / 7.0)
+            Y += height + (height / 7.0)
+            X = x
+
+    def add (self, brick):
+        self._bricks.append(brick)
+
+    def remove (self, brick):
+        self._bricks.remove(brick)
+
+    def draw (self):
+        for brick in self._bricks:
+            if brick != None:
+                brick.draw()
